@@ -17,11 +17,13 @@
     "@mui/material": "^5.14.6",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.1",
+    "date-fns": "^3.6.0",
     "formik": "^2.4.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
+    "socket.io-client": "^4.7.5",
     "sweetalert2": "^11.7.27",
     "sweetalert2-react-content": "^5.0.7",
     "yup": "^1.2.0"
@@ -35,7 +37,7 @@
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
-    "typescript": "^5.0.2",
+    "typescript": "^5.5.2",
     "vite": "^4.4.5"
   }
 }
