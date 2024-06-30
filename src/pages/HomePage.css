@@ -1,0 +1,19 @@
+.ContainerPrincipal {
+  margin: 1rem 3rem;
+
+}
+
+.ContainerButton {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 1rem 0rem;
+}
+
+.buttonAdd {
+  padding: .5rem;
+  border: 1px solid green;
+  color: green;
+  border-radius: .5rem;
+}
