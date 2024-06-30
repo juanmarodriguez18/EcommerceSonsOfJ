@@ -55,7 +55,7 @@ const HomePage = () => {
               <Card>
                 <CardMedia
                   component="img"
-                  height="240"
+                  height="400"
                   image={Array.from(empresa.imagenesEmpresa.values())[0]?.url || 'https://via.placeholder.com/240'}
                   alt={empresa.nombre}
                 />

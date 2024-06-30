@@ -38,7 +38,7 @@ const SucursalesPage = () => {
               {sucursal.imagenesSucursal && sucursal.imagenesSucursal.length > 0 && (
                 <CardMedia
                   component="img"
-                  height="240"
+                  height="400"
                   image={sucursal.imagenesSucursal[0].url}
                   alt={sucursal.nombre}
                 />
