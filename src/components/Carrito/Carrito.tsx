@@ -164,9 +164,13 @@ export function Carrito() {
       } else {
         alert('El pedido se guardó correctamente. Complete el pago con Mercado Pago.');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error al confirmar la compra:', error);
-      alert('Ocurrió un error al confirmar la compra. Inténtalo de nuevo más tarde.');
+      if (error instanceof Error) {
+        alert(`Ocurrió un error al confirmar la compra: ${error.message}`);
+      } else {
+        alert('Ocurrió un error desconocido al confirmar la compra. Inténtalo de nuevo más tarde.');
+      }
     } finally {
       setLoading(false);
     }
