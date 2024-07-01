@@ -21,9 +21,9 @@ const LogoutButton = () => {
         fontSize: "0.875rem",
         fontWeight: "bold",
         textAlign: "center",
-        bgcolor: "#eb4034",
+        bgcolor: "#802019",
         "&:hover": {
-          bgcolor: "#802019",
+          bgcolor: "#eb4034",
         },
       }}
     >
