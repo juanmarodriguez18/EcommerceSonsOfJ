@@ -1,17 +1,8 @@
-import {
-  AppBar,
-  Avatar,
-  Badge,
-  Box,
-  Button,
-  Toolbar,
-  Typography,
-} from "@mui/material";
-import { ShoppingCart as ShoppingCartIcon } from "@mui/icons-material";
+
 import { useCarrito } from "../Carrito/useCarrito";
 import { AppBar, Avatar, Badge, Box, Button, Toolbar, Typography } from "@mui/material";
 import { ShoppingCart as ShoppingCartIcon, Grading as GradingIcon } from "@mui/icons-material";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../ControlAcceso/AuthContext";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
@@ -64,6 +55,15 @@ const Header = () => {
           sx={{ textDecoration: "none", color: "#f54c4c", flexGrow: 1 }}
         ></Typography>
         <LoginCliente open={modalLoginOpen} onClose={handleCloseModalLogin} />
+        <Button
+          disableRipple
+          disableTouchRipple
+          className="btn-list-sidebar"
+          startIcon={<GradingIcon />}
+          onClick={() => navigate("/pedidosCliente")}
+        >
+          Tus Pedidos
+        </Button>
         <Button
           disableRipple
           disableTouchRipple
