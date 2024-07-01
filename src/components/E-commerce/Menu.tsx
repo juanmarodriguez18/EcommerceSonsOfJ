@@ -11,6 +11,7 @@ import SearchBar from '../SearchBar/SearchBar';
 import { getInsumosBySucursalId, getManufacturadosBySucursalId } from '../../services/SucursalService';
 import LoginCliente from '../ControlAcceso/LoginCliente';
 import { useAuth } from '../ControlAcceso/AuthContext';
+import { Sucursal } from '../../types/Sucursal';
 
 
 export const Menu: React.FC = () => {
@@ -87,7 +88,7 @@ export const Menu: React.FC = () => {
         <SearchBar onSearch={setQuery} />
       </Box>
 
-      <Box sx={{ overflowY: 'auto', maxHeight: '80vh', width: '100%' }}>
+      <Box sx={{ zoom: '120%', overflowY: 'auto', maxHeight: '55vh', width: '100%' }}>
         <Box width={1500} display="flex" alignItems="center" mb={2}>
           <Grid container spacing={4}>
             {loading ? (
@@ -97,15 +98,15 @@ export const Menu: React.FC = () => {
                 <Typography variant="body1">Esta sucursal no tiene artículos en el menú.</Typography>
               ) : (
                 filteredArticulos.map((articulo) => (
-                  <Grid item key={articulo.id} xs={12} sm={6} md={4} sx={{ maxWidth: '300px' }}>
+                  <Grid item key={articulo.id} xs={12} sm={6} md={3} sx={{ maxWidth: '300px' }}>
                     <Card sx={{ width: '100%' }}>
                       <CardMedia
                         component="img"
-                        height="300"
+                        height="250"
                         image={Array.from(articulo.imagenesArticulo.values())[0]?.url || ''}
                         alt={articulo.denominacion}
                       />
-                      <CardContent>
+                      <CardContent sx={{ zoom: '70%' }}>
                         <Typography gutterBottom variant="h5" component="div">
                           {articulo.denominacion}
                         </Typography>
@@ -116,23 +117,27 @@ export const Menu: React.FC = () => {
                           ${articulo.precioVenta}
                         </Typography>
                       </CardContent>
-                      <CardActions sx={{ justifyContent: 'left', marginLeft: 2, marginBottom: 4 }}>
-                        <Link to={`/articulos/${articulo.id}`}>
-                          <InfoIcon
-                            sx={{
-                              bgcolor: "#FB9553",
-                              color: "#FFEDC2",
-                              borderRadius: "50%",
-                              width: 40,
-                              marginRight: 2,
-                              height: 40,
-                              p: 0.1,
-                              "&:hover": {
-                                bgcolor: "#FB5353",
-                              },
-                            }}
-                          />
-                        </Link>
+                      <CardActions sx={{ zoom: '70%', justifyContent: 'left', marginLeft: 2, marginBottom: 4 }}>
+                        {'esParaElaborar' in articulo ? (
+                          <div className="espacio" style={{ marginLeft: 60 }}/>
+                        ) : (
+                          <Link to={`/menu/${sucursalId}/${articulo.id}`}>
+                            <InfoIcon
+                              sx={{
+                                bgcolor: "#FB9553",
+                                color: "#FFEDC2",
+                                borderRadius: "50%",
+                                width: 40,
+                                marginRight: 2,
+                                height: 40,
+                                p: 0.1,
+                                "&:hover": {
+                                  bgcolor: "#FB5353",
+                                },
+                              }}
+                            />
+                          </Link>
+                        )}
                         {cart.find((item: any) => item.articulo.id === articulo.id)?.cantidad ? (
                           <div className="cantidad-carrito" style={{ marginLeft: 190, display: 'flex', alignItems: 'center' }}>
                             <IconButton
@@ -184,7 +189,7 @@ export const Menu: React.FC = () => {
       <LoginCliente open={modalLoginOpen} onClose={handleCloseModalLogin} />
 
       {/* Botón Ir a Pagar */}
-      <Box mt={3} textAlign="center">
+      <Box sx={{ marginBottom: 3 }} mt={3} textAlign="center">
         <Button variant="contained" color="primary" onClick={handleIrAPagar}>
           Ir a Pagar
         </Button>

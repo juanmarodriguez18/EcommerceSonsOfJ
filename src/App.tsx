@@ -10,6 +10,7 @@ import RegisterCliente from "./components/ControlAcceso/RegisterCliente";
 import { RutaPrivada } from "./components/ControlAcceso/RutaPrivada";
 import SucursalesPage from "./pages/SucursalesPage";
 import PedidosCliente from "./components/Pedidos/PedidosCliente";
+import MenuDetalle from "./components/E-commerce/MenuDetalle";
 
 
 
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" Component={HomePage} />
         <Route path="/menu/:sucursalId" element={<Menu />} />
+        <Route path="/menu/:sucursalId/:id" element={<MenuDetalle />} />
         <Route path="/registerCliente" element={<RegisterCliente />} />
         <Route path="/sucursales/:empresaId" element={<SucursalesPage />} />
 
