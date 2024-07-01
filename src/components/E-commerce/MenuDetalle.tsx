@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  Container,
   Typography,
   Grid,
   Card,
@@ -14,6 +13,7 @@ import {
   TableRow,
   TableCell,
   IconButton,
+  Box,
 } from "@mui/material";
 import { AccessTime, ArrowBack } from "@mui/icons-material";
 import { getArticuloManufacturadoById } from "../../services/ArticuloManufacturadoService";
@@ -51,15 +51,34 @@ const MenuDetalle: React.FC = () => {
   );
 
   return (
-    <Container
+    <Box
+      component="main"
       sx={{
-        borderRadius: 8,
-        width: "100%",
-        marginTop: 2,
-        bgcolor: "#eee",
-        boxShadow: 2,
+        zoom: "90%",
         overflowY: "auto",
-        maxHeight: "90vh",
+        maxHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center", // Alinear en el centro verticalmente
+        justifyContent: "center", // Alinear en el centro horizontalmente
+        width: "100%",
+        height: "100%",
+        bgcolor: "#eee",
+        backgroundImage: "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
+        backgroundSize: "cover", // Ajuste para cubrir toda la pantalla
+      }}
+    >
+    <Box
+      maxWidth="md"
+      sx={{
+        marginTop: 5,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        backgroundColor: "rgba(245, 245, 245, 0.8)", // Fondo gris claro con 90% de opacidad
+        padding: 1,
+        borderRadius: 2,
+        boxShadow: 3, // Sombra suave
       }}
     >
       <Grid container spacing={3} alignItems="center">
@@ -84,7 +103,13 @@ const MenuDetalle: React.FC = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           {imagenesArticuloArray.length > 0 && (
-            <Card>
+            <Card
+              sx={{
+                borderRadius: 2,
+                backgroundColor: "rgba(245, 245, 245, 0.2)", // Fondo gris claro con 90% de opacidad
+                boxShadow: 3, // Sombra suave
+              }}
+            >
               <CardMedia
                 component="img"
                 height="100%"
@@ -95,7 +120,13 @@ const MenuDetalle: React.FC = () => {
           )}
         </Grid>
         <Grid item xs={12} md={6}>
-          <Card>
+          <Card
+          sx={{
+            backgroundColor: "rgba(245, 245, 245, 0.7)", // Fondo gris claro con 90% de opacidad
+            borderRadius: 2,
+            boxShadow: 3, // Sombra suave
+          }}
+          >
             <CardContent sx={{ width: "100%", height: "100%" }}>
               <Typography sx={{ height: 100 }} variant="h6">
                 Descripción: {articulo.descripcion}
@@ -114,7 +145,7 @@ const MenuDetalle: React.FC = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography variant="h4">Insumos:</Typography>
+          <Typography sx={{ marginLeft: 1 }} variant="h4">Insumos:</Typography>
           <TableContainer>
             <Table>
               <TableBody>
@@ -137,7 +168,10 @@ const MenuDetalle: React.FC = () => {
                           component="img"
                           image={Array.from(detalle.articuloInsumo.imagenesArticulo)[0].url}
                           alt={detalle.articuloInsumo.denominacion}
-                          sx={{ maxWidth: 150, maxHeight: 150 }}
+                          sx={{
+                            maxWidth: 150,
+                            maxHeight: 150,
+                          }}
                         />
                       )}
                     </TableCell>
@@ -148,7 +182,8 @@ const MenuDetalle: React.FC = () => {
           </TableContainer>
         </Grid>
       </Grid>
-    </Container>
+    </Box>
+    </Box>
   );
 };
 

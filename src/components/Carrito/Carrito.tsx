@@ -179,11 +179,38 @@ export function Carrito() {
   const montoCarrito = typeof totalPedido === 'number' ? totalPedido : 0;
 
   return (
-    <Box sx={{ padding: 3 }}>
+    <Box
+      sx={{
+        padding: 3,
+        overflowY: "auto",
+        maxHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center", // Alinear en el centro verticalmente
+        width: "100%",
+        height: "100%",
+        bgcolor: "#eee",
+        backgroundImage: "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
+        backgroundSize: "cover", // Ajuste para cubrir toda la pantalla
+      }}
+    >
+      <Box
+        maxWidth="md"
+        sx={{
+          padding: 3,
+          width: "100%",
+          bgcolor: "black",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundSize: "cover",
+          borderRadius: 2,
+          backgroundColor: "rgba(245, 245, 245, 0.8)", // Fondo gris claro con 90% de opacidad
+        }}
+      >
       <Typography variant="h4" gutterBottom>
         Carrito de Compras
       </Typography>
-      <List sx={{ bgcolor: '#F5F5F5', borderRadius: 2, marginBottom: 4 }}>
+      <List sx={{ bgcolor: '#F5F5F5', borderRadius: 2, marginBottom: 4, boxShadow: 3, backgroundColor: "rgba(245, 245, 245, 0.6)" }}>
         {cart.map((detalle) => (
           <CartItem
             key={detalle.articulo.id}
@@ -196,7 +223,22 @@ export function Carrito() {
         Total Pedido: ${totalPedido}
       </Typography>
 
-      <Grid container spacing={2}>
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#69471D",
+            color: '#69471D',
+          },
+          "& label.Mui-focused": {
+            color: '#69471D',
+          },
+        }}
+      >
         <Grid item xs={3}>
           <FormControl fullWidth margin="normal">
             <InputLabel id="tipo-envio-label">Tipo de Envío</InputLabel>
@@ -205,6 +247,13 @@ export function Carrito() {
               label="Tipo de Envío"
               value={tipoEnvio}
               onChange={(e) => setTipoEnvio(e.target.value as TipoEnvio)}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    mt: 1, // Margen superior para ajustar la posición del menú
+                  },
+                },
+              }}
             >
               <MenuItem value={TipoEnvio.DELIVERY}>Delivery</MenuItem>
               <MenuItem value={TipoEnvio.TAKE_AWAY}>Retirar</MenuItem>
@@ -220,6 +269,13 @@ export function Carrito() {
               label="Forma de Pago"
               value={formaPago}
               onChange={(e) => setFormaPago(e.target.value as FormaPago)}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    mt: 1, // Margen superior para ajustar la posición del menú
+                  },
+                },
+              }}
             > 
               {tipoEnvio === TipoEnvio.TAKE_AWAY && (
                 <MenuItem value={FormaPago.EFECTIVO}>Efectivo</MenuItem>
@@ -244,6 +300,13 @@ export function Carrito() {
               value={domicilioSeleccionado?.id || ''}
               onChange={(e) => setDomicilioSeleccionado(clienteSeleccionado?.domicilios.find(d => d.id === e.target.value) || null)}
               disabled={!clienteSeleccionado}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    mt: 1, // Margen superior para ajustar la posición del menú
+                  },
+                },
+              }}
             >
               {clienteSeleccionado?.domicilios.map(domicilio => (
                 <MenuItem key={domicilio.id} value={domicilio.id}>{domicilio.calle} {domicilio.numero}, {domicilio.localidad.nombre}, {domicilio?.localidad?.provincia?.nombre}</MenuItem>
@@ -281,6 +344,7 @@ export function Carrito() {
       {formaPago === FormaPago.MERCADO_PAGO && pedido && (
         <CheckoutMP montoCarrito={montoCarrito} pedido={pedido} onPagoCompleto={handlePagoCompleto} />
       )}
+    </Box>
     </Box>
   );
 }

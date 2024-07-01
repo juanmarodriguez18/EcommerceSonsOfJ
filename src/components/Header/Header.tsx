@@ -1,8 +1,18 @@
-
 import { useCarrito } from "../Carrito/useCarrito";
-import { AppBar, Avatar, Badge, Box, Button, Toolbar, Typography } from "@mui/material";
-import { ShoppingCart as ShoppingCartIcon, Grading as GradingIcon } from "@mui/icons-material";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  AppBar,
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import {
+  ShoppingCart as ShoppingCartIcon,
+  Grading as GradingIcon,
+} from "@mui/icons-material";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../ControlAcceso/AuthContext";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
@@ -15,15 +25,16 @@ const Header = () => {
   //const { sucursalId } = useParams<{ sucursalId: string }>();
   const { isLoggedIn, cliente } = useAuth();
   const { cart } = useCarrito();
+  const { sucursalId } = useParams<{ sucursalId: string }>();
   const [modalLoginOpen, setModalLoginOpen] = useState(false);
   const cantidadTotal = cart.reduce((total, item) => total + item.cantidad, 0);
   const navigate = useNavigate();
-
 
   const handleCloseModalLogin = () => {
     setModalLoginOpen(false);
   };
 
+  
   /*const handleIrAPagar = () => {
         if (isLoggedIn) {
           // Si el usuario está autenticado, redirige al carrito
@@ -33,7 +44,6 @@ const Header = () => {
           setModalLoginOpen(true);
         }
       };*/
-
 
   return (
     <AppBar
@@ -55,28 +65,35 @@ const Header = () => {
           sx={{ textDecoration: "none", color: "#f54c4c", flexGrow: 1 }}
         ></Typography>
         <LoginCliente open={modalLoginOpen} onClose={handleCloseModalLogin} />
-        <Button
-          disableRipple
-          disableTouchRipple
-          className="btn-list-sidebar"
-          startIcon={<GradingIcon />}
-          onClick={() => navigate("/pedidosCliente")}
-        >
-          Tus Pedidos
-        </Button>
-        <Button
-          disableRipple
-          disableTouchRipple
-          className="btn-list-sidebar"
-          sx={{ color: "#eee" }}
-          startIcon={
-            <Badge badgeContent={cantidadTotal}>
-              <ShoppingCartIcon sx={{ fontSize: 30, color: "#eee" }} />
-            </Badge>
-          }
-        >
-          Carrito
-        </Button>
+        {isLoggedIn ? (
+          <>
+            <Button
+              disableRipple
+              disableTouchRipple
+              className="btn-list-sidebar"
+              startIcon={<GradingIcon />}
+              onClick={() => navigate("/pedidosCliente")}
+            >
+              Tus Pedidos
+            </Button>
+            <Button
+              disableRipple
+              disableTouchRipple
+              className="btn-list-sidebar"
+              sx={{ color: "#eee" }}
+              onClick={() => navigate(`/carrito/1`)}
+              startIcon={
+                <Badge badgeContent={cantidadTotal}>
+                  <ShoppingCartIcon sx={{ fontSize: 30, color: "#eee" }} />
+                </Badge>
+              }
+            >
+              Carrito
+            </Button>
+          </>
+        ) : (
+          <></>
+        )}
         <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
           {isLoggedIn ? (
             <>
