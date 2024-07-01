@@ -50,7 +50,7 @@ const HomePage = () => {
         <Box sx={{ alignSelf: "flex-start" }}>
           <Typography
             variant="h3"
-            sx={{ textShadow: "1px 1px 6px #222", color: "#eee" }}
+            sx={{ textShadow: "2px 2px 6px #222", color: "#eee" }}
           >
             Bienvenidos a El Buen Sabor
           </Typography>

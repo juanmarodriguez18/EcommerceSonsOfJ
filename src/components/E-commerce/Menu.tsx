@@ -96,6 +96,8 @@ export const Menu: React.FC = () => {
         width: "100%",
         height: "100%",
         bgcolor: "#eee",
+        backgroundSize: "cover",
+        backgroundImage: "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
       }}
     >
       <Box
@@ -107,14 +109,13 @@ export const Menu: React.FC = () => {
           justifyContent: "center",
           alignItems: "center",
           backgroundSize: "cover",
-          backgroundImage:
-            "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
+          backgroundColor: "rgba(245, 245, 245, 0.2)", // Fondo gris claro con 90% de opacidad
         }}
       >
         <Typography
           color={"#eee"}
           variant="h3"
-          sx={{ textShadow: "1px 1px 6px #000" }}
+          sx={{ textShadow: "2px 2px 6px #000" }}
         >
           Nuestro Menú
         </Typography>
@@ -125,6 +126,7 @@ export const Menu: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          backgroundColor: "rgba(245, 245, 245, 0.5)", // Fondo gris claro con 90% de opacidad
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
@@ -166,6 +168,7 @@ export const Menu: React.FC = () => {
                       bgcolor: "#eee",
                       boxShadow: 0,
                       border: "1px solid #bbb",
+                      backgroundColor: "rgba(245, 245, 245, 0.8)", // Fondo gris claro con 90% de opacidad
                     }}
                   >
                     <CardMedia

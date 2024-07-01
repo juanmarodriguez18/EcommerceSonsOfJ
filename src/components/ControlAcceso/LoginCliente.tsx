@@ -68,6 +68,9 @@ const LoginCliente: React.FC<LoginClienteProps> = ({ open, onClose }) => {
                   },
                 },
               },
+              "& label.Mui-focused": {
+                color: '#69471D',
+              },
             }}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -89,6 +92,9 @@ const LoginCliente: React.FC<LoginClienteProps> = ({ open, onClose }) => {
                     borderColor: "#69471D",
                   },
                 },
+              },
+              "& label.Mui-focused": {
+                color: '#69471D',
               },
             }}
             onChange={(e) => setClave(e.target.value)}
