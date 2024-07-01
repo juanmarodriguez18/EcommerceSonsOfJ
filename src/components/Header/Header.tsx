@@ -34,7 +34,6 @@ const Header = () => {
     setModalLoginOpen(false);
   };
 
-  
   /*const handleIrAPagar = () => {
         if (isLoggedIn) {
           // Si el usuario está autenticado, redirige al carrito
@@ -73,6 +72,7 @@ const Header = () => {
               className="btn-list-sidebar"
               startIcon={<GradingIcon />}
               onClick={() => navigate("/pedidosCliente")}
+              sx={{ color: "#B88A60" }}
             >
               Tus Pedidos
             </Button>
