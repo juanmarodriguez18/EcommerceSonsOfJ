@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { TextField, Button, Typography, Container, Box, Alert, IconButton, InputAdornment, MenuItem, Grid } from '@mui/material';
+import { TextField, Button, Typography, Container, Box, Alert, IconButton, InputAdornment, MenuItem, Grid, CardContent, Card } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { getLocalidades } from '../../services/LocalidadService';
 import { Localidad } from '../../types/Localidad';
@@ -24,6 +24,7 @@ const RegisterCliente: React.FC = () => {
     const [mensaje, setMensaje] = useState('');
     const [mostrarClave, setMostrarClave] = useState(false);
     const [mostrarConfirmarClave, setMostrarConfirmarClave] = useState(false);
+    const [mostrarBotonAgregar, setMostrarBotonAgregar] = useState(true); // Estado para mostrar/ocultar el botón de agregar domicilio
 
     useEffect(() => {
         const fetchLocalidades = async () => {
@@ -39,6 +40,7 @@ const RegisterCliente: React.FC = () => {
 
     const addDomicilio = () => {
         setDomicilios([...domicilios, { id: 0, eliminado: false, calle: '', numero: 0, cp: 0, piso: 0, nroDpto: 0, localidad: new Localidad() }]);
+        setMostrarBotonAgregar(false); // Ocultar el botón después de agregar un domicilio
     };
 
     const handleLocalidadChange = (index: number, localidadId: number) => {
@@ -109,261 +111,297 @@ const RegisterCliente: React.FC = () => {
     const eliminarDomicilio = (index: number) => {
         const newDomicilios = domicilios.filter((_, i) => i !== index);
         setDomicilios(newDomicilios);
+        setMostrarBotonAgregar(true); // Mostrar el botón después de eliminar un domicilio
     };
 
     return (
-        <Container component="main" maxWidth="md">
-            <Typography component="h1" variant="h5" align="center" gutterBottom>
-                Registro de Cliente
-            </Typography>
-            <Box component="form" onSubmit={handleRegister} sx={{ mt: 3 }}>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="nombre"
-                            label="Nombre"
-                            name="nombre"
-                            autoComplete="nombre"
-                            autoFocus
-                            value={nombre}
-                            onChange={(e) => setNombre(e.target.value)}
-                        />
-                    </Grid>
-
-                    <Grid item xs={6}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="apellido"
-                            label="Apellido"
-                            name="apellido"
-                            autoComplete="apellido"
-                            value={apellido}
-                            onChange={(e) => setApellido(e.target.value)}
-                        />
-                    </Grid>
-
-                    <Grid item xs={6}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="telefono"
-                            label="Teléfono"
-                            name="telefono"
-                            autoComplete="telefono"
-                            value={telefono}
-                            onChange={(e) => setTelefono(e.target.value)}
-                        />
-                    </Grid>
-
-                    <Grid item xs={6}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email"
-                            name="email"
-                            autoComplete="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </Grid>
-
-                    <Grid item xs={6}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="clave"
-                            label="Clave"
-                            type={mostrarClave ? 'text' : 'password'}
-                            id="clave"
-                            autoComplete="current-password"
-                            value={clave}
-                            onChange={(e) => setClave(e.target.value)}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={() => setMostrarClave(!mostrarClave)}
-                                            edge="end"
-                                        >
-                                            {mostrarClave ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                )
-                            }}
-                        />
-                    </Grid>
-
-                    <Grid item xs={6}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="confirmarClave"
-                            label="Confirmar Clave"
-                            type={mostrarConfirmarClave ? 'text' : 'password'}
-                            id="confirmarClave"
-                            value={confirmarClave}
-                            onChange={(e) => setConfirmarClave(e.target.value)}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle confirm password visibility"
-                                            onClick={() => setMostrarConfirmarClave(!mostrarConfirmarClave)}
-                                            edge="end"
-                                        >
-                                            {mostrarConfirmarClave ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                )
-                            }}
-                        />
-                    </Grid>
-
-                    <Grid item xs={6}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="fechaNacimiento"
-                            label="Fecha de Nacimiento"
-                            type="date"
-                            InputLabelProps={{ shrink: true }}
-                            value={fechaNacimiento}
-                            onChange={(e) => setFechaNacimiento(e.target.value)}
-                        />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={addDomicilio} // Función para agregar un nuevo domicilio
-                            sx={{ mt: 3, mb: 2 }}
-                        >
-                            Agregar Domicilio
-                        </Button>
-                    </Grid>
-
-                    {domicilios.map((domicilio, index) => (
-                        <Grid container spacing={1} key={index} sx={{ mb: 2 }} alignItems="center">
-                            <Grid item xs={5}>
+        <Container
+            component="main"
+            maxWidth="md"
+            sx={{
+                overflowY: "auto",
+                maxHeight: "100vh",
+                width: "100%"
+            }}
+        >
+        <Box
+            sx={{
+                marginTop: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                backgroundColor: '#f5f5f5', // Fondo gris claro
+                padding: 3,
+                borderRadius: 2,
+                boxShadow: 3, // Sombra suave
+            }}
+        >
+            <Card
+                variant="outlined"
+                sx={{
+                    width: '100%',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Sombra más definida
+                    borderRadius: '16px', // Esquinas redondeadas
+                }}
+            >
+                <CardContent>
+                    <Typography component="h1" variant="h4" align="center" gutterBottom>
+                        Registro de Cliente
+                    </Typography>
+                    <Box component="form" onSubmit={handleRegister} sx={{ mt: 3 }}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
                                     required
                                     fullWidth
-                                    label="Calle"
-                                    value={domicilio.calle}
-                                    onChange={(e) => handleDomicilioChange(index, 'calle', e.target.value)}
+                                    id="nombre"
+                                    label="Nombre"
+                                    name="nombre"
+                                    autoComplete="nombre"
+                                    autoFocus
+                                    value={nombre}
+                                    onChange={(e) => setNombre(e.target.value)}
                                 />
                             </Grid>
-                            <Grid item xs={3}>
+    
+                            <Grid item xs={12} sm={6}>
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
                                     required
                                     fullWidth
-                                    label="Número"
-                                    value={domicilio.numero}
-                                    onChange={(e) => handleDomicilioChange(index, 'numero', e.target.value)}
+                                    id="apellido"
+                                    label="Apellido"
+                                    name="apellido"
+                                    autoComplete="apellido"
+                                    value={apellido}
+                                    onChange={(e) => setApellido(e.target.value)}
                                 />
                             </Grid>
-                            <Grid item xs={3}>
+    
+                            <Grid item xs={12} sm={6}>
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
                                     required
                                     fullWidth
-                                    label="Código Postal"
-                                    value={domicilio.cp}
-                                    onChange={(e) => handleDomicilioChange(index, 'cp', e.target.value)}
+                                    id="telefono"
+                                    label="Teléfono"
+                                    name="telefono"
+                                    autoComplete="telefono"
+                                    value={telefono}
+                                    onChange={(e) => setTelefono(e.target.value)}
                                 />
                             </Grid>
-                            <Grid item xs={2}>
+    
+                            <Grid item xs={12} sm={6}>
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
                                     required
                                     fullWidth
-                                    label="Piso"
-                                    value={domicilio.piso}
-                                    onChange={(e) => handleDomicilioChange(index, 'piso', e.target.value)}
+                                    id="email"
+                                    label="Email"
+                                    name="email"
+                                    autoComplete="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                 />
                             </Grid>
-                            <Grid item xs={2}>
+    
+                            <Grid item xs={12} sm={6}>
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
                                     required
                                     fullWidth
-                                    label="Número de Departamento"
-                                    value={domicilio.nroDpto}
-                                    onChange={(e) => handleDomicilioChange(index, 'nroDpto', e.target.value)}
+                                    name="clave"
+                                    label="Clave"
+                                    type={mostrarClave ? 'text' : 'password'}
+                                    id="clave"
+                                    autoComplete="current-password"
+                                    value={clave}
+                                    onChange={(e) => setClave(e.target.value)}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={() => setMostrarClave(!mostrarClave)}
+                                                    edge="end"
+                                                >
+                                                    {mostrarClave ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }}
                                 />
                             </Grid>
-                            <Grid item xs={6}>
+    
+                            <Grid item xs={12} sm={6}>
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
                                     required
                                     fullWidth
-                                    select
-                                    label="Localidad"
-                                    value={domicilio.localidad?.id || ''}
-                                    onChange={(e) => handleLocalidadChange(index, Number(e.target.value))}
-                                >
-                                    {localidades.map((localidad) => (
-                                        <MenuItem key={localidad.id} value={localidad.id}>
-                                            {localidad.nombre}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
+                                    name="confirmarClave"
+                                    label="Confirmar Clave"
+                                    type={mostrarConfirmarClave ? 'text' : 'password'}
+                                    id="confirmarClave"
+                                    value={confirmarClave}
+                                    onChange={(e) => setConfirmarClave(e.target.value)}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle confirm password visibility"
+                                                    onClick={() => setMostrarConfirmarClave(!mostrarConfirmarClave)}
+                                                    edge="end"
+                                                >
+                                                    {mostrarConfirmarClave ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }}
+                                />
                             </Grid>
-                            <Grid item xs={2}>
-                                <IconButton onClick={() => eliminarDomicilio(index)}>
-                                    <DeleteIcon />
-                                </IconButton>
+    
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="fechaNacimiento"
+                                    label="Fecha de Nacimiento"
+                                    type="date"
+                                    InputLabelProps={{ shrink: true }}
+                                    value={fechaNacimiento}
+                                    onChange={(e) => setFechaNacimiento(e.target.value)}
+                                />
+                            </Grid>
+                            {mostrarBotonAgregar && (
+                                <Grid item xs={12} sm={6}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        fullWidth
+                                        onClick={addDomicilio}
+                                        sx={{ mt: 3, mb: 2 }}
+                                    >
+                                        Agregar Domicilio
+                                    </Button>
+                                </Grid>
+                            )}
+                            {domicilios.map((domicilio, index) => (
+                                <Grid key={index} container spacing={2} sx={{ mt: 0, mb: 2, marginLeft:0, marginRight:0 }} alignItems="center">
+                                    <Grid container item xs={12} spacing={2}>
+                                        <Grid item xs={12} sm={9}>
+                                            <TextField
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                label="Calle"
+                                                value={domicilio.calle}
+                                                onChange={(e) => handleDomicilioChange(index, 'calle', e.target.value)}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={3}>
+                                            <TextField
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                label="Número"
+                                                value={domicilio.numero}
+                                                onChange={(e) => handleDomicilioChange(index, 'numero', e.target.value)}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container item xs={12} spacing={2} alignItems="center">
+                                        <Grid item xs={12} sm={3}>
+                                            <TextField
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                label="Código Postal"
+                                                value={domicilio.cp}
+                                                onChange={(e) => handleDomicilioChange(index, 'cp', e.target.value)}
+                                            />
+                                        </Grid>
+    
+                                        <Grid item xs={12} sm={2}>
+                                            <TextField
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                label="Piso"
+                                                value={domicilio.piso}
+                                                onChange={(e) => handleDomicilioChange(index, 'piso', e.target.value)}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={2}>
+                                            <TextField
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                label="N° Depto"
+                                                value={domicilio.nroDpto}
+                                                onChange={(e) => handleDomicilioChange(index, 'nroDpto', e.target.value)}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={4}>
+                                            <TextField
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                select
+                                                label="Localidad"
+                                                value={domicilio.localidad?.id || ''}
+                                                onChange={(e) => handleLocalidadChange(index, Number(e.target.value))}
+                                            >
+                                                {localidades.map((localidad) => (
+                                                    <MenuItem key={localidad.id} value={localidad.id}>
+                                                        {localidad.nombre}
+                                                    </MenuItem>
+                                                ))}
+                                            </TextField>
+                                        </Grid>
+                                        <Grid item xs={1}>
+                                            <IconButton onClick={() => eliminarDomicilio(index)}>
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            ))}
+                            <Grid container spacing={2} justifyContent="center">
+                                <Grid item xs={12} sm={6}>
+                                    <Button
+                                        type="submit"
+                                        fullWidth
+                                        variant="contained"
+                                        color="primary"
+                                        sx={{ mt: 3, mb: 2 }}
+                                    >
+                                        Registrar
+                                    </Button>
+                                    {mensaje && <Alert severity="error">{mensaje}</Alert>}
+                                </Grid>
                             </Grid>
                         </Grid>
-                    ))}
-
-
-                    <Grid container spacing={2} justifyContent="center">
-                        <Grid item xs={3}>
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                Registrar
-                            </Button>
-                            {mensaje && <Alert severity="error">{mensaje}</Alert>}
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Box>
-        </Container>
-
+                    </Box>
+                </CardContent>
+            </Card>
+        </Box>
+    </Container>
     );
 };
 

@@ -1,27 +1,16 @@
+
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Button,
-  Typography,
-  Grid,
-  Box,
-  IconButton,
-} from "@mui/material";
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, Grid, Box, IconButton } from "@mui/material";
 import { ArticuloManufacturado } from "../../types/ArticuloManufacturado";
 import { ArticuloInsumo } from "../../types/ArticuloInsumo";
 import { useCarrito } from "../Carrito/useCarrito";
 import { useNavigate, useParams } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
-import {
-  getInsumosBySucursalId,
-  getManufacturadosBySucursalId,
-} from "../../services/SucursalService";
+import { getInsumosBySucursalId, getManufacturadosBySucursalId } from "../../services/SucursalService";
 import LoginCliente from "../ControlAcceso/LoginCliente";
 import { useAuth } from "../ControlAcceso/AuthContext";
 import { AddOutlined, RemoveOutlined } from "@mui/icons-material";
+
 
 export const Menu: React.FC = () => {
   const { sucursalId } = useParams<{ sucursalId: string }>();
@@ -146,12 +135,14 @@ export const Menu: React.FC = () => {
           <SearchBar onSearch={setQuery} />
         </Box>
 
+
         <Box sx={{ width: "100%" }}>
           <Grid
             container
             spacing={3}
             sx={{ display: "flex", justifyContent: "center" }}
           >
+
             {loading ? (
               <Typography variant="body1" mt={6}>
                 Cargando...
@@ -161,6 +152,7 @@ export const Menu: React.FC = () => {
                 Esta sucursal no tiene artículos en el menú.
               </Typography>
             ) : (
+
               filteredArticulos.map((articulo) => (
                 <Grid
                   item
