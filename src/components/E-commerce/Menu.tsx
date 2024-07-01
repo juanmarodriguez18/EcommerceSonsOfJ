@@ -10,13 +10,10 @@ import {
   Box,
   IconButton,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
 import { ArticuloManufacturado } from "../../types/ArticuloManufacturado";
 import { ArticuloInsumo } from "../../types/ArticuloInsumo";
 import { useCarrito } from "../Carrito/useCarrito";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import InfoIcon from "@mui/icons-material/Info";
+import { useNavigate, useParams } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import {
   getInsumosBySucursalId,

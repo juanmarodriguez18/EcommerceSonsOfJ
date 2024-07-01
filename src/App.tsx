@@ -20,18 +20,9 @@ function App() {
           <Route path="/menu/:sucursalId" element={<Menu />} />
           <Route path="/registerCliente" element={<RegisterCliente />} />
           <Route path="/sucursales/:empresaId" element={<SucursalesPage />} />
-
-
-          <Route
-            path="/carrito/:sucursalId"
-            element={
-              <RutaPrivada>
-                <Carrito />
-              </RutaPrivada>
-            <Route path="/pedidosCliente" element={<RutaPrivada><PedidosCliente /></RutaPrivada>} />
-            }
-          />
-        </Routes>
+          
+          <Route path="/pedidosCliente" element={<RutaPrivada><PedidosCliente /></RutaPrivada>} />
+          <Route path="/carrito/:sucursalId" element={<RutaPrivada><Carrito /></RutaPrivada>}/></Routes>
       </Layout>
     </BrowserRouter>
   );
