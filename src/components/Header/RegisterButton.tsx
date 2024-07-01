@@ -19,7 +19,7 @@ const RegisterButton = () => {
         textAlign: "center",
         bgcolor: "#3d6b43",
         "&:hover": {
-          bgcolor: "#243825",
+          bgcolor: "#458D4F",
         },
       }}
     >
