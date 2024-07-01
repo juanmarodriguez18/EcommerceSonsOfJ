@@ -18,9 +18,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, sx }) => {
         onChange={(e) => onSearch(e.target.value)}
         sx={{
           width: "100%",
-          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#3f51b5", // Cambiar el color del borde cuando está enfocado
-          },
+          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+            {
+              borderColor: "#69471D",
+            },
         }}
       />
     </Box>
