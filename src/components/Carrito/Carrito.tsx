@@ -194,8 +194,10 @@ export function Carrito() {
         width: "100%",
         height: "100%",
         bgcolor: "#eee",
-        backgroundImage: "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
         backgroundSize: "cover", // Ajuste para cubrir toda la pantalla
+        backgroundImage: "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
+        backgroundAttachment: "fixed",
+        backgroundPosition: "center top",
       }}
     >
       <Box
