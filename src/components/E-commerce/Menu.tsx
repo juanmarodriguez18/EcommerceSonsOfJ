@@ -1,41 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, Grid, Box, IconButton } from '@mui/material';
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import { ArticuloManufacturado } from '../../types/ArticuloManufacturado';
-import { ArticuloInsumo } from '../../types/ArticuloInsumo';
-import { useCarrito } from '../Carrito/useCarrito';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import InfoIcon from "@mui/icons-material/Info";
-import SearchBar from '../SearchBar/SearchBar';
-import { getInsumosBySucursalId, getManufacturadosBySucursalId } from '../../services/SucursalService';
-import LoginCliente from '../ControlAcceso/LoginCliente';
-import { useAuth } from '../ControlAcceso/AuthContext';
-import { Sucursal } from '../../types/Sucursal';
+
+import React, { useEffect, useState } from "react";
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, Grid, Box, IconButton } from "@mui/material";
+import { ArticuloManufacturado } from "../../types/ArticuloManufacturado";
+import { ArticuloInsumo } from "../../types/ArticuloInsumo";
+import { useCarrito } from "../Carrito/useCarrito";
+import { useNavigate, useParams } from "react-router-dom";
+import SearchBar from "../SearchBar/SearchBar";
+import { getInsumosBySucursalId, getManufacturadosBySucursalId } from "../../services/SucursalService";
+import LoginCliente from "../ControlAcceso/LoginCliente";
+import { useAuth } from "../ControlAcceso/AuthContext";
+import { AddOutlined, RemoveOutlined } from "@mui/icons-material";
 
 
 export const Menu: React.FC = () => {
   const { sucursalId } = useParams<{ sucursalId: string }>();
-  const [articulosManufacturados, setArticulosManufacturados] = useState<ArticuloManufacturado[]>([]);
-  const [articulosInsumos, setArticulosInsumos] = useState<ArticuloInsumo[]>([]);
+  const [articulosManufacturados, setArticulosManufacturados] = useState<
+    ArticuloManufacturado[]
+  >([]);
+  const [articulosInsumos, setArticulosInsumos] = useState<ArticuloInsumo[]>(
+    []
+  );
   const { addCarrito, updateCarrito, cart } = useCarrito();
   const [loading, setLoading] = useState(false);
-  const [query, setQuery] = useState<string>('');
+  const [query, setQuery] = useState<string>("");
   const [modalLoginOpen, setModalLoginOpen] = useState(false);
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuth(); 
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     const fetchArticulos = async () => {
       try {
         setLoading(true);
-        const manufacturados = await getManufacturadosBySucursalId(Number(sucursalId));
+        const manufacturados = await getManufacturadosBySucursalId(
+          Number(sucursalId)
+        );
         const insumos = await getInsumosBySucursalId(Number(sucursalId));
         setArticulosManufacturados(manufacturados);
         setArticulosInsumos(insumos);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching artículos de la sucursal:', error);
+        console.error("Error fetching artículos de la sucursal:", error);
         setLoading(false);
       }
     };
@@ -45,21 +49,31 @@ export const Menu: React.FC = () => {
     }
   }, [sucursalId]);
 
-  const handleIncrementarCantidad = (articulo: ArticuloManufacturado | ArticuloInsumo) => {
-    const currentCantidad = cart.find(item => item.articulo.id === articulo.id)?.cantidad || 0;
+  const handleIncrementarCantidad = (
+    articulo: ArticuloManufacturado | ArticuloInsumo
+  ) => {
+    const currentCantidad =
+      cart.find((item) => item.articulo.id === articulo.id)?.cantidad || 0;
     updateCarrito(articulo, currentCantidad + 1);
   };
 
-  const handleDecrementarCantidad = (articulo: ArticuloManufacturado | ArticuloInsumo) => {
-    const currentCantidad = cart.find(item => item.articulo.id === articulo.id)?.cantidad || 0;
+  const handleDecrementarCantidad = (
+    articulo: ArticuloManufacturado | ArticuloInsumo
+  ) => {
+    const currentCantidad =
+      cart.find((item) => item.articulo.id === articulo.id)?.cantidad || 0;
     if (currentCantidad > 0) {
       updateCarrito(articulo, currentCantidad - 1);
     }
   };
 
   const filteredArticulos = [
-    ...articulosManufacturados.filter(manufacturado => !manufacturado.eliminado),
-    ...articulosInsumos.filter(insumo => !insumo.esParaElaborar && !insumo.eliminado)
+    ...articulosManufacturados.filter(
+      (manufacturado) => !manufacturado.eliminado
+    ),
+    ...articulosInsumos.filter(
+      (insumo) => !insumo.esParaElaborar && !insumo.eliminado
+    ),
   ].filter((articulo) =>
     articulo.denominacion.toLowerCase().includes(query.toLowerCase())
   );
@@ -79,107 +93,206 @@ export const Menu: React.FC = () => {
   };
 
   return (
-    <Box p={3}>
-      <Typography variant="h4" gutterBottom>
-        Menú de Sucursal
-      </Typography>
-
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-        <SearchBar onSearch={setQuery} />
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        height: "100%",
+        bgcolor: "#eee",
+      }}
+    >
+      <Box
+        sx={{
+          padding: 3,
+          width: "100%",
+          bgcolor: "black",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundSize: "cover",
+          backgroundImage:
+            "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
+        }}
+      >
+        <Typography
+          color={"#eee"}
+          variant="h3"
+          sx={{ textShadow: "1px 1px 6px #000" }}
+        >
+          Nuestro Menú
+        </Typography>
       </Box>
+      <Box
+        sx={{
+          padding: 2,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+          <SearchBar onSearch={setQuery} />
+        </Box>
 
-      <Box sx={{ zoom: '120%', overflowY: 'auto', maxHeight: '55vh', width: '100%' }}>
-        <Box width={1500} display="flex" alignItems="center" mb={2}>
-          <Grid container spacing={4}>
+
+        <Box sx={{ width: "100%" }}>
+          <Grid
+            container
+            spacing={3}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
+
             {loading ? (
-              <Typography variant="body1">Cargando...</Typography>
+              <Typography variant="body1" mt={6}>
+                Cargando...
+              </Typography>
+            ) : filteredArticulos.length === 0 ? (
+              <Typography variant="body1" mt={6}>
+                Esta sucursal no tiene artículos en el menú.
+              </Typography>
             ) : (
-              filteredArticulos.length === 0 ? (
-                <Typography variant="body1">Esta sucursal no tiene artículos en el menú.</Typography>
-              ) : (
-                filteredArticulos.map((articulo) => (
-                  <Grid item key={articulo.id} xs={12} sm={6} md={3} sx={{ maxWidth: '300px' }}>
-                    <Card sx={{ width: '100%' }}>
-                      <CardMedia
-                        component="img"
-                        height="250"
-                        image={Array.from(articulo.imagenesArticulo.values())[0]?.url || ''}
-                        alt={articulo.denominacion}
-                      />
-                      <CardContent sx={{ zoom: '70%' }}>
-                        <Typography gutterBottom variant="h5" component="div">
+
+              filteredArticulos.map((articulo) => (
+                <Grid
+                  item
+                  key={articulo.id}
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  sx={{ maxWidth: "300px" }}
+                >
+                  <Card
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      borderRadius: 3,
+                      bgcolor: "#eee",
+                      boxShadow: 0,
+                      border: "1px solid #bbb",
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      sx={{
+                        width: 230,
+                        height: 250,
+                      }}
+                      image={
+                        Array.from(articulo.imagenesArticulo.values())[0]
+                          ?.url || ""
+                      }
+                      alt={articulo.denominacion}
+                    />
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <CardContent sx={{ flex: "1 0 auto" }}>
+                        <Typography
+                          component="div"
+                          variant="h5"
+                          color={"#69471D"}
+                        >
                           {articulo.denominacion}
                         </Typography>
-                        <Typography height={60} variant="body2" color="textSecondary" component="p">
-                          {'descripcion' in articulo && (articulo as ArticuloManufacturado).descripcion}
+                        <Typography
+                          variant="subtitle1"
+                          color="text.secondary"
+                          component="div"
+                          height={65}
+                        >
+                          {"descripcion" in articulo &&
+                            (articulo as ArticuloManufacturado).descripcion}
                         </Typography>
                         <Typography variant="h6" color="textPrimary">
-                          ${articulo.precioVenta}
+                          <b>${articulo.precioVenta}</b>
                         </Typography>
                       </CardContent>
-                      <CardActions sx={{ zoom: '70%', justifyContent: 'left', marginLeft: 2, marginBottom: 4 }}>
-                        {'esParaElaborar' in articulo ? (
-                          <div className="espacio" style={{ marginLeft: 60 }}/>
-                        ) : (
-                          <Link to={`/menu/${sucursalId}/${articulo.id}`}>
-                            <InfoIcon
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          pl: 1,
+                          pb: 1,
+                        }}
+                      >
+                        <CardActions
+                          sx={{
+                            justifyContent: "left",
+                          }}
+                        >
+                          {cart.find((item) => item.articulo.id === articulo.id)
+                            ?.cantidad ? (
+                            <Box
                               sx={{
-                                bgcolor: "#FB9553",
-                                color: "#FFEDC2",
-                                borderRadius: "50%",
-                                width: 40,
-                                marginRight: 2,
-                                height: 40,
-                                p: 0.1,
-                                "&:hover": {
-                                  bgcolor: "#FB5353",
-                                },
+                                display: "flex",
+                                alignItems: "center",
+                                width: 190,
+                                bgcolor: "#ccc",
+                                borderRadius: 20,
                               }}
-                            />
-                          </Link>
-                        )}
-                        {cart.find((item: any) => item.articulo.id === articulo.id)?.cantidad ? (
-                          <div className="cantidad-carrito" style={{ marginLeft: 190, display: 'flex', alignItems: 'center' }}>
-                            <IconButton
-                              sx={{
-                                marginRight: 4,
-                                color: "#FFFFFF",
-                                bgcolor: "#FFA5A5",
-                                "&:hover": {
-                                  bgcolor: "#E82222",
-                                },
-                              }}
-                              size="medium"
-                              onClick={() => handleDecrementarCantidad(articulo)}
                             >
-                              <RemoveIcon />
-                            </IconButton>
-                            <Typography variant="h5">{" "}{cart.find((item: any) => item.articulo.id === articulo.id)?.cantidad}{" "}</Typography>
-                            <IconButton
+                              <IconButton
+                                sx={{
+                                  color: "#eee",
+                                  bgcolor: "#2A211B",
+                                  "&:hover": {
+                                    bgcolor: "#69471D",
+                                  },
+                                }}
+                                size="medium"
+                                onClick={() =>
+                                  handleDecrementarCantidad(articulo)
+                                }
+                              >
+                                <RemoveOutlined />
+                              </IconButton>
+                              <Typography
+                                variant="h5"
+                                sx={{ width: "100%", textAlign: "center" }}
+                              >
+                                {" "}
+                                {
+                                  cart.find(
+                                    (item) => item.articulo.id === articulo.id
+                                  )?.cantidad
+                                }{" "}
+                              </Typography>
+                              <IconButton
+                                sx={{
+                                  color: "#eee",
+                                  bgcolor: "#2A211B",
+                                  "&:hover": {
+                                    bgcolor: "#69471D",
+                                  },
+                                }}
+                                size="small"
+                                onClick={() =>
+                                  handleIncrementarCantidad(articulo)
+                                }
+                              >
+                                <AddOutlined />
+                              </IconButton>
+                            </Box>
+                          ) : (
+                            <Button
                               sx={{
-                                marginLeft: 4,
-                                color: "#FFFFFF",
-                                bgcolor: "#93EE9C",
+                                width: 190,
+                                bgcolor: "#3d6b43",
                                 "&:hover": {
-                                  bgcolor: "#3FB94A",
+                                  bgcolor: "#243825",
                                 },
                               }}
-                              size="medium"
-                              onClick={() => handleIncrementarCantidad(articulo)}
+                              variant="contained"
+                              onClick={() => addCarrito(articulo)}
                             >
-                              <AddIcon />
-                            </IconButton>
-                          </div>
-                        ) : (
-                          <Button style={{ marginLeft: 170 }} sx={{ marginBottom: 0.5 }} variant="contained" color="primary" onClick={() => addCarrito(articulo)}>
-                            Agregar al Carrito
-                          </Button>
-                        )}
-                      </CardActions>
-                    </Card>
-                  </Grid>
-                ))
-              )
+                              Agregar al Carrito
+                            </Button>
+                          )}
+                        </CardActions>
+                      </Box>
+                    </Box>
+                  </Card>
+                </Grid>
+              ))
             )}
           </Grid>
         </Box>
@@ -189,8 +302,17 @@ export const Menu: React.FC = () => {
       <LoginCliente open={modalLoginOpen} onClose={handleCloseModalLogin} />
 
       {/* Botón Ir a Pagar */}
-      <Box sx={{ marginBottom: 3 }} mt={3} textAlign="center">
-        <Button variant="contained" color="primary" onClick={handleIrAPagar}>
+      <Box mt={3} textAlign="center">
+        <Button
+          variant="contained"
+          sx={{
+            bgcolor: "#2A211B",
+            "&:hover": {
+              bgcolor: "#69471D",
+            },
+          }}
+          onClick={handleIrAPagar}
+        >
           Ir a Pagar
         </Button>
       </Box>
