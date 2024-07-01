@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, Grid, Box, IconButton } from "@mui/material";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+  Grid,
+  Box,
+  IconButton,
+} from "@mui/material";
 import { ArticuloManufacturado } from "../../types/ArticuloManufacturado";
 import { ArticuloInsumo } from "../../types/ArticuloInsumo";
 import { useCarrito } from "../Carrito/useCarrito";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
-import { getInsumosBySucursalId, getManufacturadosBySucursalId } from "../../services/SucursalService";
+import {
+  getInsumosBySucursalId,
+  getManufacturadosBySucursalId,
+} from "../../services/SucursalService";
 import LoginCliente from "../ControlAcceso/LoginCliente";
 import { useAuth } from "../ControlAcceso/AuthContext";
 import { AddOutlined, RemoveOutlined } from "@mui/icons-material";
@@ -13,8 +26,12 @@ import InfoIcon from "@mui/icons-material/Info";
 
 export const Menu: React.FC = () => {
   const { sucursalId } = useParams<{ sucursalId: string }>();
-  const [articulosManufacturados, setArticulosManufacturados] = useState<ArticuloManufacturado[]>([]);
-  const [articulosInsumos, setArticulosInsumos] = useState<ArticuloInsumo[]>([]);
+  const [articulosManufacturados, setArticulosManufacturados] = useState<
+    ArticuloManufacturado[]
+  >([]);
+  const [articulosInsumos, setArticulosInsumos] = useState<ArticuloInsumo[]>(
+    []
+  );
   const { addCarrito, updateCarrito, cart } = useCarrito();
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState<string>("");
@@ -97,7 +114,8 @@ export const Menu: React.FC = () => {
         height: "100%",
         bgcolor: "#eee",
         backgroundSize: "cover",
-        backgroundImage: "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
+        backgroundImage:
+          "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
         backgroundAttachment: "fixed",
         backgroundPosition: "center top",
       }}
@@ -128,21 +146,19 @@ export const Menu: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          backgroundColor: "rgba(245, 245, 245, 0.5)", // Fondo gris claro con 90% de opacidad
+          backgroundColor: "rgba(245, 245, 245, 0.5)",
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
           <SearchBar onSearch={setQuery} />
         </Box>
 
-
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%", overflowY: "auto", maxHeight: "55vh" }}>
           <Grid
             container
             spacing={3}
             sx={{ display: "flex", justifyContent: "center" }}
           >
-
             {loading ? (
               <Typography variant="body1" mt={6}>
                 Cargando...
@@ -152,7 +168,6 @@ export const Menu: React.FC = () => {
                 Esta sucursal no tiene artículos en el menú.
               </Typography>
             ) : (
-
               filteredArticulos.map((articulo) => (
                 <Grid
                   item
@@ -169,7 +184,6 @@ export const Menu: React.FC = () => {
                       borderRadius: 3,
                       bgcolor: "#eee",
                       boxShadow: 0,
-                      border: "1px solid #bbb",
                       backgroundColor: "rgba(245, 245, 245, 0.8)", // Fondo gris claro con 90% de opacidad
                     }}
                   >
@@ -288,26 +302,29 @@ export const Menu: React.FC = () => {
                               Agregar al Carrito
                             </Button>
                           )}
-                          {'esParaElaborar' in articulo ? (
-                          <div className="espacio" style={{ marginLeft: 60 }}/>
-                        ) : (
-                          <Link to={`/menu/${sucursalId}/${articulo.id}`}>
-                            <InfoIcon
-                              sx={{
-                                bgcolor: "#FB9553",
-                                color: "#FFEDC2",
-                                borderRadius: "50%",
-                                width: 40,
-                                marginLeft: 14,
-                                height: 40,
-                                p: 0.1,
-                                "&:hover": {
-                                  bgcolor: "#FB5353",
-                                },
-                              }}
+                          {"esParaElaborar" in articulo ? (
+                            <div
+                              className="espacio"
+                              style={{ marginLeft: 60 }}
                             />
-                          </Link>
-                        )}
+                          ) : (
+                            <Link to={`/menu/${sucursalId}/${articulo.id}`}>
+                              <InfoIcon
+                                sx={{
+                                  bgcolor: "#FB9553",
+                                  color: "#FFEDC2",
+                                  borderRadius: "50%",
+                                  width: 40,
+                                  marginLeft: 14,
+                                  height: 40,
+                                  p: 0.1,
+                                  "&:hover": {
+                                    bgcolor: "#FB5353",
+                                  },
+                                }}
+                              />
+                            </Link>
+                          )}
                         </CardActions>
                       </Box>
                     </Box>

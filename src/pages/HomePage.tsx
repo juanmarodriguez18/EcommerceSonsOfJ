@@ -46,7 +46,8 @@ const HomePage = () => {
           display: "flex",
           padding: 2,
           backgroundSize: "cover",
-          backgroundImage: "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
+          backgroundImage:
+            "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
           backgroundAttachment: "fixed",
           backgroundPosition: "center top",
           flexDirection: "column",
@@ -76,7 +77,6 @@ const HomePage = () => {
             alignItems: "center",
             padding: 3,
             borderRadius: 3,
-            
           }}
         >
           <Typography
@@ -93,20 +93,10 @@ const HomePage = () => {
               width: "100%",
             }}
           >
-            <Box width={1200} >
-              <Grid
-                container
-                sx={{ justifyContent: "center"  }}
-                spacing={3}
-              >
+            <Box width={1200}>
+              <Grid container sx={{ justifyContent: "center" }} spacing={3}>
                 {filteredEmpresas.map((empresa) => (
-                  <Grid
-                    key={empresa.id}
-                    item
-                    xs={12}
-                    sm={6}
-                    md={4}
-                  >
+                  <Grid key={empresa.id} item xs={12} sm={6} md={4}>
                     <Card
                       sx={{
                         width: "100%",
