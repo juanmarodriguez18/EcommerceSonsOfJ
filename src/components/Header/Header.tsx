@@ -9,7 +9,9 @@ import {
 } from "@mui/material";
 import { ShoppingCart as ShoppingCartIcon } from "@mui/icons-material";
 import { useCarrito } from "../Carrito/useCarrito";
-import { Link } from "react-router-dom";
+import { AppBar, Avatar, Badge, Box, Button, Toolbar, Typography } from "@mui/material";
+import { ShoppingCart as ShoppingCartIcon, Grading as GradingIcon } from "@mui/icons-material";
+import { Link, useNavigate} from "react-router-dom";
 import { useAuth } from "../ControlAcceso/AuthContext";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
@@ -24,6 +26,8 @@ const Header = () => {
   const { cart } = useCarrito();
   const [modalLoginOpen, setModalLoginOpen] = useState(false);
   const cantidadTotal = cart.reduce((total, item) => total + item.cantidad, 0);
+  const navigate = useNavigate();
+
 
   const handleCloseModalLogin = () => {
     setModalLoginOpen(false);
@@ -38,6 +42,7 @@ const Header = () => {
           setModalLoginOpen(true);
         }
       };*/
+
 
   return (
     <AppBar

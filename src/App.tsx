@@ -6,6 +6,9 @@ import RegisterCliente from "./components/ControlAcceso/RegisterCliente";
 import { RutaPrivada } from "./components/ControlAcceso/RutaPrivada";
 import SucursalesPage from "./pages/SucursalesPage";
 import Layout from "./components/Layout/Layout";
+import PedidosCliente from "./components/Pedidos/PedidosCliente";
+
+
 
 function App() {
   //Rutas de nuestra aplicacion
@@ -18,12 +21,14 @@ function App() {
           <Route path="/registerCliente" element={<RegisterCliente />} />
           <Route path="/sucursales/:empresaId" element={<SucursalesPage />} />
 
+
           <Route
             path="/carrito/:sucursalId"
             element={
               <RutaPrivada>
                 <Carrito />
               </RutaPrivada>
+            <Route path="/pedidosCliente" element={<RutaPrivada><PedidosCliente /></RutaPrivada>} />
             }
           />
         </Routes>

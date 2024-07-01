@@ -96,4 +96,22 @@ export const facturarPedido = async (pedido: Pedido, email: string) => {
         console.log(error);
     }
 }
+
+export const descargarFactura = async (pedido: Pedido) => {
+    const response = await fetch(`http://localhost:8080/facturacion/factura/${pedido.id}`);
+    if(response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "factura.pdf";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        return blob;
+    } else {
+        console.error("Error al descargar el archivo: ", response.statusText);
+    }
+};
   
