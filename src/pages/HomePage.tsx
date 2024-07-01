@@ -15,7 +15,9 @@ import { Empresa } from "../types/Empresa";
 const HomePage = () => {
   const navigate = useNavigate();
   const [empresas, setEmpresas] = useState<Empresa[]>([]);
-  const filteredEmpresas = empresas.filter((empresa) => empresa.eliminado === false);
+  const filteredEmpresas = empresas.filter(
+    (empresa) => empresa.eliminado === false
+  );
 
   useEffect(() => {
     const fetchEmpresas = async () => {
@@ -44,11 +46,16 @@ const HomePage = () => {
           display: "flex",
           padding: 2,
           backgroundSize: "cover",
-          backgroundImage:
-            "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
+          backgroundImage: "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
+          backgroundAttachment: "fixed",
+          backgroundPosition: "center top",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          overflowX: "hidden",
         }}
       >
-        <Box sx={{ alignSelf: "flex-start" }}>
+        <Box sx={{ alignSelf: "flex-start", textAlign: "center" }}>
           <Typography
             variant="h3"
             sx={{ textShadow: "2px 2px 6px #222", color: "#eee" }}
@@ -69,6 +76,7 @@ const HomePage = () => {
             alignItems: "center",
             padding: 3,
             borderRadius: 3,
+            
           }}
         >
           <Typography
@@ -77,50 +85,72 @@ const HomePage = () => {
           >
             Seleccione la empresa a la que quiere pedir
           </Typography>
-          <Grid container spacing={3}>
-            {filteredEmpresas.map((empresa) => (
-              <Grid key={empresa.id} item xs={12} sm={6}>
-                <Card
-                  sx={{
-                    borderRadius: 3,
-                    bgcolor: "#2A211B",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    height="240"
-                    image={
-                      Array.from(empresa.imagenesEmpresa.values())[0]?.url ||
-                      "https://via.placeholder.com/240"
-                    }
-                    alt={empresa.nombre}
-                  />
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="h6"
-                      component="div"
-                      color={"#eee"}
-                    >
-                      {empresa.nombre}
-                    </Typography>
-                    <Button
-                      variant="contained"
+          <Box
+            sx={{
+              overflowY: "auto",
+              maxHeight: "52vh",
+              marginLeft: "1000px",
+              width: "100%",
+            }}
+          >
+            <Box width={1200} >
+              <Grid
+                container
+                sx={{ justifyContent: "center"  }}
+                spacing={3}
+              >
+                {filteredEmpresas.map((empresa) => (
+                  <Grid
+                    key={empresa.id}
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                  >
+                    <Card
                       sx={{
-                        bgcolor: "#69471D",
-                        "&:hover": {
-                          bgcolor: "#B88A60",
-                        },
+                        width: "100%",
+                        borderRadius: 3,
+                        bgcolor: "#2A211B",
                       }}
-                      onClick={() => handleSeleccionarEmpresa(empresa.id)}
                     >
-                      Seleccionar
-                    </Button>
-                  </CardContent>
-                </Card>
+                      <CardMedia
+                        component="img"
+                        height="350"
+                        image={
+                          Array.from(empresa.imagenesEmpresa.values())[0]
+                            ?.url || "https://via.placeholder.com/240"
+                        }
+                        alt={empresa.nombre}
+                      />
+                      <CardContent>
+                        <Typography
+                          gutterBottom
+                          variant="h6"
+                          component="div"
+                          color={"#eee"}
+                        >
+                          {empresa.nombre}
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            bgcolor: "#69471D",
+                            "&:hover": {
+                              bgcolor: "#B88A60",
+                            },
+                          }}
+                          onClick={() => handleSeleccionarEmpresa(empresa.id)}
+                        >
+                          Seleccionar
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>
+            </Box>
+          </Box>
         </Box>
       </Box>
     </>

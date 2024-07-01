@@ -98,6 +98,8 @@ export const Menu: React.FC = () => {
         bgcolor: "#eee",
         backgroundSize: "cover",
         backgroundImage: "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
+        backgroundAttachment: "fixed",
+        backgroundPosition: "center top",
       }}
     >
       <Box
