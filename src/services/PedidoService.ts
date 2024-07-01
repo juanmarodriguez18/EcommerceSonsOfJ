@@ -15,12 +15,19 @@ export async function guardarPedidoEnBD(pedido: Pedido): Promise<void> {
             },
             body: JSON.stringify(pedido) // Enviar el objeto Pedido convertido a JSON
         });
+
         if (!response.ok) {
-            throw new Error('Error al guardar el pedido');
+            const errorResponse = await response.json();
+            const errorMessage = errorResponse.error || 'Error desconocido al guardar el pedido';
+            throw new Error(errorMessage);
         }
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error en guardarPedidoEnBD:', error);
-        throw new Error('Error al guardar el pedido. Por favor, inténtalo de nuevo más tarde.');
+        if (error instanceof Error) {
+            throw new Error(error.message);
+        } else {
+            throw new Error('Error desconocido al guardar el pedido. Por favor, inténtalo de nuevo más tarde.');
+        }
     }
 }
 

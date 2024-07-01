@@ -16,6 +16,7 @@ const SucursalesPage = () => {
   const navigate = useNavigate();
   const { empresaId } = useParams<{ empresaId: string }>();
   const [sucursales, setSucursales] = useState<Sucursal[]>([]);
+  const filteredSucursales = sucursales.filter((sucursal) => sucursal.eliminado === false);
 
   useEffect(() => {
     const fetchSucursales = async () => {
@@ -60,7 +61,7 @@ const SucursalesPage = () => {
         spacing={3}
         sx={{ display: "flex", justifyContent: "center", mt: 1 }}
       >
-        {sucursales.map((sucursal) => (
+        {filteredSucursales.map((sucursal) => (
           <Grid key={sucursal.id} item xs={12} sm={6} md={4}>
             <Card
               sx={{

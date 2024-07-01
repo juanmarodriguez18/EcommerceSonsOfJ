@@ -15,6 +15,7 @@ import { Empresa } from "../types/Empresa";
 const HomePage = () => {
   const navigate = useNavigate();
   const [empresas, setEmpresas] = useState<Empresa[]>([]);
+  const filteredEmpresas = empresas.filter((empresa) => empresa.eliminado === false);
 
   useEffect(() => {
     const fetchEmpresas = async () => {
@@ -77,7 +78,7 @@ const HomePage = () => {
             Seleccione la empresa a la que quiere pedir
           </Typography>
           <Grid container spacing={3}>
-            {empresas.map((empresa) => (
+            {filteredEmpresas.map((empresa) => (
               <Grid key={empresa.id} item xs={12} sm={6}>
                 <Card
                   sx={{
@@ -87,7 +88,7 @@ const HomePage = () => {
                 >
                   <CardMedia
                     component="img"
-                    height="350"
+                    height="240"
                     image={
                       Array.from(empresa.imagenesEmpresa.values())[0]?.url ||
                       "https://via.placeholder.com/240"
