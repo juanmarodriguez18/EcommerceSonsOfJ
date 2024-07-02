@@ -184,32 +184,34 @@ export function Carrito() {
   return (
     <Box
       sx={{
-        padding: 3,
-        overflowY: "auto",
-        maxHeight: "100vh",
+        padding: 1,
+        ooverflowY: "hidden",
         display: "flex",
         flexDirection: "column",
         alignItems: "center", // Alinear en el centro verticalmente
         width: "100%",
         height: "100%",
         bgcolor: "#eee",
-        backgroundSize: "cover", // Ajuste para cubrir toda la pantalla
         backgroundImage: "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
+        backgroundSize: "cover", // Ajuste para cubrir toda la pantalla
         backgroundAttachment: "fixed",
         backgroundPosition: "center top",
       }}
     >
       <Box
+        className="smooth-scrollbar"
         maxWidth="md"
         sx={{
-          padding: 3,
+          padding: 2,
+          overflowY:"scroll",
+          maxHeight: "80vh",
           width: "100%",
           bgcolor: "black",
           justifyContent: "center",
           alignItems: "center",
           backgroundSize: "cover",
           borderRadius: 2,
-          backgroundColor: "rgba(245, 245, 245, 0.8)", // Fondo gris claro con 90% de opacidad
+          backgroundColor: "rgba(245, 245, 245, 0.9)", // Fondo gris claro con 90% de opacidad
         }}
       >
       <Typography variant="h4" gutterBottom>
@@ -327,6 +329,12 @@ export function Carrito() {
           color="secondary"
           startIcon={<ClearAllIcon />}
           onClick={limpiarCarrito}
+          sx={{
+            bgcolor: "#eb4034",
+            "&:hover": {
+              bgcolor: "#802019",
+            },
+          }}
         >
           Limpiar Carrito
         </Button>
@@ -335,6 +343,12 @@ export function Carrito() {
           disabled={loading}
           startIcon={<ShoppingCartIcon />}
           onClick={confirmarCompra}
+          sx={{
+            bgcolor: "#458D4F",
+            "&:hover": {
+              bgcolor: "#3d6b43",
+            },
+          }}
         >
           Confirmar Compra
         </Button>
