@@ -15,7 +15,7 @@ import { useDatosSeleccion } from './useDatosSeleccion';
 import CheckoutMP from './MercadoPago/CheckoutMP';
 import { ArticuloInsumo } from '../../types/ArticuloInsumo';
 import { useAuth } from '../ControlAcceso/AuthContext';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Cliente } from '../../types/Cliente';
 import { Sucursal } from '../../types/Sucursal';
 import { getSucursalById } from '../../services/SucursalService';
@@ -65,6 +65,7 @@ export function Carrito() {
   const [loading, setLoading] = useState(false);
   const [pedido, setPedido] = useState<Pedido | null>(null);
   const [sucursalSeleccionada, setSucursalSeleccionada] = useState<Sucursal | undefined>(undefined);
+  const navigate = useNavigate();
 
   // Asegúrate de que `user` contenga la información del cliente logeado, incluyendo sus domicilios
   const clienteSeleccionado: Cliente | undefined = cliente ?? undefined;
@@ -85,10 +86,6 @@ export function Carrito() {
       fetchSucursal();
     }
   }, [sucursalId]);
-
-  const mostrarCarritoJSON = () => {
-    console.log(cart);
-  };
 
   const confirmarCompra = async () => {
     if (cart.length === 0) {
@@ -161,6 +158,7 @@ export function Carrito() {
       if (formaPago === FormaPago.EFECTIVO) {
         alert('El pedido se guardó correctamente.');
         limpiarCarrito();
+        navigate('/pedidosCliente');
       } else {
         alert('El pedido se guardó correctamente. Complete el pago con Mercado Pago.');
       }
@@ -178,6 +176,7 @@ export function Carrito() {
 
   const handlePagoCompleto = () => {
     limpiarCarrito();
+    navigate('/pedidosCliente');
   };
 
   const montoCarrito = typeof totalPedido === 'number' ? totalPedido : 0;
@@ -330,13 +329,6 @@ export function Carrito() {
           onClick={limpiarCarrito}
         >
           Limpiar Carrito
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={mostrarCarritoJSON}
-        >
-          Mostrar Cart Json
         </Button>
         <Button
           variant="contained"

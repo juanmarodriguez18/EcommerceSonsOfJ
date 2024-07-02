@@ -46,7 +46,7 @@ function CheckoutMP({ montoCarrito, pedido }: CheckoutMPProps) {
     return (
         <div>
             <div className={idPreference ? 'divVisible' : 'divInvisible'}>
-                <Wallet initialization={{ preferenceId: idPreference, redirectMode: "blank" }} customization={{ texts: { valueProp: 'smart_option' } }} />
+                <Wallet initialization={{ preferenceId: idPreference, redirectMode: "self" }} customization={{ texts: { valueProp: 'smart_option' } }} />
             </div>
         </div>
     );
