@@ -24,7 +24,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          overflow: "auto",
         }}
       >
         {children}
