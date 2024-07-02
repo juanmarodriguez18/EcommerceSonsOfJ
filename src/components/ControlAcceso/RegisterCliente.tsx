@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { TextField, Button, Typography, Container, Box, Alert, IconButton, InputAdornment, MenuItem, Grid, CardContent, Card } from "@mui/material";
+import { TextField, Button, Typography, Box, Alert, IconButton, InputAdornment, MenuItem, Grid, CardContent, Card } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { getLocalidades } from "../../services/LocalidadService";
 import { Localidad } from "../../types/Localidad";
 import { Domicilio } from "../../types/Domicilio";
 import { Delete as DeleteIcon } from "@mui/icons-material";
+import "../../styles/ScrollBarInvisible.css";
 
 const API_URL = "http://localhost:8080/auth/registerCliente";
 
@@ -50,7 +51,7 @@ const RegisterCliente: React.FC = () => {
         localidad: new Localidad(),
       },
     ]);
-    setMostrarBotonAgregar(false); // Ocultar el botón después de agregar un domicilio
+    //setMostrarBotonAgregar(false); // Ocultar el botón después de agregar un domicilio
   };
 
   const handleLocalidadChange = (index: number, localidadId: number) => {
@@ -129,9 +130,7 @@ const RegisterCliente: React.FC = () => {
     <Box
       component="main"
       sx={{
-        zoom: "90%",
-        overflowY: "auto",
-        maxHeight: "100vh",
+        overflowY: "hidden",
         display: "flex",
         flexDirection: "column",
         alignItems: "center", // Alinear en el centro verticalmente
@@ -141,12 +140,14 @@ const RegisterCliente: React.FC = () => {
         bgcolor: "#eee",
         backgroundImage: "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
         backgroundSize: "cover", // Ajuste para cubrir toda la pantalla
+        backgroundAttachment: "fixed",
+        backgroundPosition: "center top",
       }}
     >
       <Box
         maxWidth="md"
         sx={{
-          marginTop: 5,
+          marginTop: 1,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -157,13 +158,17 @@ const RegisterCliente: React.FC = () => {
         }}
       >
         <Card
+          className="smooth-scrollbar"
           variant="outlined"
           sx={{
+            overflowY:"scroll",
+            maxHeight: "80vh",
             width: "100%",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.6)", // Sombra más definida
             backgroundColor: "rgba(220, 220, 220, 0.9)",
             borderRadius: "16px", // Esquinas redondeadas
             alignItems: "center",
+            scrollbarWidth: "none", // Oculta el scrollbar en navegadores que lo soportan
           }}
         >
           <CardContent>
@@ -175,6 +180,7 @@ const RegisterCliente: React.FC = () => {
                 container
                 spacing={2}
                 sx={{
+                  marginLeft: -1,
                   display: "flex",
                   justifyContent: "center",
                   width: "100%",
