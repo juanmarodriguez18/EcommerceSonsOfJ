@@ -22,6 +22,7 @@ import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import { Estado } from "../../types/enums/Estado";
 import { descargarFactura } from "../../services/PedidoService";
 import PedidoEnCursoDialog from "./PedidoEnCursoDialog"; // Ajusta la ruta según la estructura de tu proyecto
+import "../../styles/ScrollBarInvisible.css";
 
 const PedidosCliente: React.FC = () => {
   const { cliente } = useAuth();
@@ -80,8 +81,7 @@ const PedidosCliente: React.FC = () => {
     <Box
       component="main"
       sx={{
-        overflowY: "auto",
-        maxHeight: "100vh",
+        overflowY: "hidden",
         display: "flex",
         flexDirection: "column",
         alignItems: "center", // Alinear en el centro verticalmente
@@ -96,13 +96,13 @@ const PedidosCliente: React.FC = () => {
     >
       <Box
         sx={{
-          marginTop: 5,
+          marginTop: 2,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           backgroundColor: "rgba(245, 245, 245, 0.9)", // Fondo gris claro con 90% de opacidad
           padding: 1,
-          borderRadius: 2,
+          borderRadius: 8,
           boxShadow: 3, // Sombra suave
         }}
       >
@@ -131,6 +131,7 @@ const PedidosCliente: React.FC = () => {
         </Box>
 
         <TableContainer
+          className="smooth-scrollbar"
           component={Paper}
           sx={{
             borderRadius: 8,
@@ -138,7 +139,7 @@ const PedidosCliente: React.FC = () => {
             marginTop: 2,
             bgcolor: "#eee",
             boxShadow: 2,
-            maxHeight: "74vh",
+            maxHeight: "65vh",
             overflow: "auto",
           }}
         >

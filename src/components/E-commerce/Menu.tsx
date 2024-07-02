@@ -107,7 +107,8 @@ export const Menu: React.FC = () => {
   return (
     <Box
       sx={{
-        zoom: "98%",
+        zoom: "94%",
+        overflowY: "hidden",
         display: "flex",
         flexDirection: "column",
         width: "100%",
@@ -133,9 +134,13 @@ export const Menu: React.FC = () => {
         }}
       >
         <Typography
-          color={"#eee"}
           variant="h3"
-          sx={{ textShadow: "2px 2px 6px #000" }}
+          sx={{
+            color: "#eee",
+            WebkitTextStroke: "1px #222", // Propiedad para el borde alrededor de las letras
+            WebkitTextFillColor: "#eee", // Color del texto interior
+            textShadow: "2px 2px 3px #222", // Sombra opcional para mejorar el contraste
+          }}
         >
           Nuestro Menú
         </Typography>
@@ -149,11 +154,31 @@ export const Menu: React.FC = () => {
           backgroundColor: "rgba(245, 245, 245, 0.5)",
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+        <Box
+          sx={{
+            mb: 2,
+            padding: 1,
+            borderRadius: 2,
+            display: "flex",
+            alignItems: "center",
+            color: "#000",
+            //WebkitTextStroke: "1px #FFF", // Propiedad para el borde alrededor de las letras
+            //WebkitTextFillColor: "#eee", // Color del texto interior
+            textShadow: "1px 1px 3px #FFF", // Sombra opcional para mejorar el contraste
+            backgroundColor: "rgba(245, 245, 245, 0.7)",
+          }}
+        >
           <SearchBar onSearch={setQuery} />
         </Box>
 
-        <Box sx={{ width: "100%", overflowY: "auto", maxHeight: "55vh" }}>
+        <Box
+          className="smooth-scrollbar"
+          sx={{
+            width: "100%",
+            overflowY: "auto",
+            maxHeight: "58vh",
+          }}
+        >
           <Grid
             container
             spacing={3}
@@ -290,7 +315,9 @@ export const Menu: React.FC = () => {
                           ) : (
                             <Button
                               sx={{
-                                width: 190,
+                                width: 190, // Reducimos el ancho del botón
+                                padding: "6px 12px", // Ajustamos el relleno (padding) para que sea más pequeño
+                                fontSize: "0.875rem", // Reducimos el tamaño de la fuente
                                 bgcolor: "#3d6b43",
                                 "&:hover": {
                                   bgcolor: "#458D4F",
@@ -299,7 +326,7 @@ export const Menu: React.FC = () => {
                               variant="contained"
                               onClick={() => addCarrito(articulo)}
                             >
-                              Agregar al Carrito
+                              Al Carrito
                             </Button>
                           )}
                           {"esParaElaborar" in articulo ? (
@@ -311,13 +338,13 @@ export const Menu: React.FC = () => {
                             <Link to={`/menu/${sucursalId}/${articulo.id}`}>
                               <InfoIcon
                                 sx={{
-                                  bgcolor: "#FB9553",
                                   color: "#FFEDC2",
                                   borderRadius: "50%",
                                   width: 40,
-                                  marginLeft: 14,
+                                  marginLeft: 18,
                                   height: 40,
                                   p: 0.1,
+                                  bgcolor: "#FB9553",
                                   "&:hover": {
                                     bgcolor: "#FB5353",
                                   },
@@ -340,19 +367,44 @@ export const Menu: React.FC = () => {
       <LoginCliente open={modalLoginOpen} onClose={handleCloseModalLogin} />
 
       {/* Botón Ir a Pagar */}
-      <Box mt={3} textAlign="center">
-        <Button
-          variant="contained"
+      <Box
+        sx={{
+          padding: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Box
           sx={{
-            bgcolor: "#2A211B",
-            "&:hover": {
-              bgcolor: "#69471D",
-            },
+            display: "flex",
+            width: "220px",
+            padding: 1,
+            borderRadius: 2,
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#000",
+            textShadow: "1px 1px 3px #FFF", // Sombra opcional para mejorar el contraste
+            backgroundColor: "rgba(245, 245, 245, 0.7)",
           }}
-          onClick={handleIrAPagar}
         >
-          Ir a Pagar
-        </Button>
+          <Button
+            variant="contained"
+            sx={{
+              width: 190,
+              height: 50,
+              alignItems: "center",
+              justifyContent: "center",
+              bgcolor: "#69471D",
+              "&:hover": {
+                bgcolor: "#D8A362",
+              },
+            }}
+            onClick={handleIrAPagar}
+          >
+            Ir a Pagar
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

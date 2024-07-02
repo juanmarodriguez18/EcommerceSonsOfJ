@@ -147,14 +147,14 @@ const RegisterCliente: React.FC = () => {
       <Box
         maxWidth="md"
         sx={{
+          padding: 1,
           marginTop: 1,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          backgroundColor: "rgba(245, 245, 245, 0.5)", // Fondo gris claro con 90% de opacidad
-          padding: 1,
           borderRadius: 2,
           boxShadow: 3, // Sombra suave
+          backgroundColor: "rgba(245, 245, 245, 0.5)", // Fondo gris claro con 90% de opacidad
         }}
       >
         <Card
