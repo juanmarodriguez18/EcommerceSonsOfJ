@@ -41,29 +41,41 @@ const HomePage = () => {
       {/* Footer */}
       <Box
         sx={{
+          overflowX: "hidden",
           width: "100%",
           height: "100%",
           display: "flex",
           padding: 2,
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
           backgroundSize: "cover",
           backgroundImage:
             "url(https://s1.1zoom.me/b5050/964/Pizza_Tomatoes_Basil_Cutting_board_614812_1920x1200.jpg)",
           backgroundAttachment: "fixed",
           backgroundPosition: "center top",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          overflowX: "hidden",
         }}
       >
-        <Box sx={{ alignSelf: "flex-start", textAlign: "center" }}>
+        <Box sx={{ textAlign: "center" }}>
           <Typography
-            variant="h3"
-            sx={{ textShadow: "2px 2px 6px #222", color: "#eee" }}
+            variant="h2"
+            sx={{
+              color: "#eee",
+              WebkitTextStroke: "1px #222", // Propiedad para el borde alrededor de las letras
+              WebkitTextFillColor: "#eee", // Color del texto interior
+              textShadow: "2px 2px 3px #222", // Sombra opcional para mejorar el contraste
+            }}
           >
             Bienvenidos a El Buen Sabor
           </Typography>
-          <Typography variant="h6" color={"#eee"}>
+          <Typography
+            variant="h6"
+            sx={{
+              color: "#eee",
+              WebkitTextFillColor: "#eee", // Color del texto interior
+              textShadow: "2px 2px 3px #000", // Sombra opcional para mejorar el contraste
+            }}
+          >
             Descubre nuestros deliciosos productos.
           </Typography>
         </Box>
@@ -81,7 +93,12 @@ const HomePage = () => {
         >
           <Typography
             variant="h6"
-            sx={{ color: "#eee", mb: 2, textShadow: "1px 1px 6px #000" }}
+            sx={{
+              mb: 2,
+              color: "#eee",
+              WebkitTextFillColor: "#eee", // Color del texto interior
+              textShadow: "2px 2px 3px #000", // Sombra opcional para mejorar el contraste
+            }}
           >
             Seleccione la empresa a la que quiere pedir
           </Typography>
