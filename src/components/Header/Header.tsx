@@ -22,7 +22,6 @@ import LoginCliente from "../ControlAcceso/LoginCliente";
 import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
 
 const Header = () => {
-  //const { sucursalId } = useParams<{ sucursalId: string }>();
   const { isLoggedIn, cliente } = useAuth();
   const { cart } = useCarrito();
   const { sucursalId } = useParams<{ sucursalId: string }>();
@@ -34,7 +33,7 @@ const Header = () => {
     setModalLoginOpen(false);
   };
 
-  /*const handleIrAPagar = () => {
+  const handleIrAPagar = () => {
         if (isLoggedIn) {
           // Si el usuario está autenticado, redirige al carrito
           navigate(`/carrito/${sucursalId}`);
@@ -42,7 +41,7 @@ const Header = () => {
           // Si el usuario no está autenticado, muestra el modal de login
           setModalLoginOpen(true);
         }
-      };*/
+      };
 
   return (
     <AppBar
@@ -81,7 +80,7 @@ const Header = () => {
               disableTouchRipple
               className="btn-list-sidebar"
               sx={{ color: "#eee" }}
-              onClick={() => navigate(`/carrito/1`)}
+              onClick={() => handleIrAPagar()}
               startIcon={
                 <Badge badgeContent={cantidadTotal}>
                   <ShoppingCartIcon sx={{ fontSize: 30, color: "#eee" }} />
